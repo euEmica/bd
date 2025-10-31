@@ -3,7 +3,6 @@ package com.example.demo.models;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -21,7 +20,7 @@ public class ArtistaModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
     @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL)
     private Set<MusicaModel> musicas = new HashSet<>();
@@ -31,11 +30,11 @@ public class ArtistaModel implements Serializable {
 
     private String nacionalidade;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

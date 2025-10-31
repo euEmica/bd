@@ -3,7 +3,6 @@ package com.example.demo.models;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -23,11 +22,13 @@ public class UsuarioModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, name="username")
     private String userName;
     private String email;
+
+
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     // esse lazy e eager pode modificar como as consultas são feitas(aqui foca na
@@ -35,11 +36,11 @@ public class UsuarioModel implements Serializable {
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     private Set<PlaylistModel> books = new HashSet<>();
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

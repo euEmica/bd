@@ -1,13 +1,7 @@
 package com.example.demo.models;
 
 import java.io.Serializable;
-import java.util.UUID;
 
-import org.springframework.boot.autoconfigure.security.oauth2.resource.ConditionalOnIssuerLocationJwtDecoder;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +18,7 @@ public class MusicaModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Long id;
 
     @OneToOne()
     @JoinColumn(name = "artista_id")
@@ -35,11 +29,11 @@ public class MusicaModel implements Serializable {
     @Column(nullable = false, name="duracao_minutos")
     private Integer duracao;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
