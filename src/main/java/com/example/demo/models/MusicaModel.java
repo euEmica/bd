@@ -18,7 +18,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "`MUSICA`")
+@Table(name = "MUSICA")
 public class MusicaModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -32,7 +32,7 @@ public class MusicaModel implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String titulo;
-    @Column(nullable = false)
+    @Column(nullable = false, name="duracao_minutos")
     private Integer duracao;
 
     public UUID getId() {
