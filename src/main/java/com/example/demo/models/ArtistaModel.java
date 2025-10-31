@@ -22,13 +22,13 @@ public class ArtistaModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL)
-    private Set<MusicaModel> musicas = new HashSet<>();
-
     @Column(nullable = false, unique = true)
     private String nome;
 
     private String nacionalidade;
+
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL)
+    private Set<MusicaModel> musicas = new HashSet<>();
 
     public Long getId() {
         return id;

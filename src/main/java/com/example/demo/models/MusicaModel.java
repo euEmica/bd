@@ -20,14 +20,18 @@ public class MusicaModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String titulo;
+
+    @Column(nullable = false, name="duracao_minutos")
+    private Integer duracaoMinutos;
+
+    @Id
+    private Long artistaId;
+
     @OneToOne()
     @JoinColumn(name = "artista_id")
     private ArtistaModel artista;
-
-    @Column(nullable = false, unique = true)
-    private String titulo;
-    @Column(nullable = false, name="duracao_minutos")
-    private Integer duracao;
 
     public Long getId() {
         return id;
@@ -53,12 +57,32 @@ public class MusicaModel implements Serializable {
         this.titulo = titulo;
     }
 
-    public Integer getDuracao() {
-        return duracao;
+    public Integer getDuracaoMinutos() {
+        return duracaoMinutos;
     }
 
-    public void setDuracao(Integer duracao) {
-        this.duracao = duracao;
+    public void setDuracaoMinutos(Integer duracao) {
+        this.duracaoMinutos = duracao;
+    }
+
+    public Long getArtistaId() {
+        return artistaId;
+    }
+
+    public void setArtistaId(Long artistaId) {
+        this.artistaId = artistaId;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        else if (this.getClass() != obj.getClass())
+            return false;
+
+        MusicaModel other = (MusicaModel) obj;
+
+        return this.id.equals(other.getId());
     }
 
 }

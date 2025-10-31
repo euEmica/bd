@@ -21,27 +21,37 @@ public class PlaylistModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long playlist_id;
+    private Long playlistId;
 
     @Id
+    @Column(name="usuario_id", nullable = false)
+    private Long usuarioId;
+
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "usuario_id", referencedColumnName = "id")
     private UsuarioModel usuario;
 
-    // analisar isso que eu não sei se ta certo por causa do (TIMESTAMP WITHOUT TIME
-    // ZONE DEFAULT CURRENT_TIMESTAMP)
     @CreationTimestamp
-    private LocalDateTime data_criacao;
+    @Column(name="data_criacao")
+    private LocalDateTime dataCriacao;
 
     @Column(nullable = false, unique = true)
     private String nome;
 
-    public Long getPlaylist_id() {
-        return playlist_id;
+    public Long getPlaylistId() {
+        return playlistId;
     }
 
-    public void setPlaylist_id(Long playlist_id) {
-        this.playlist_id = playlist_id;
+    public void setPlaylistId(Long playlistId) {
+        this.playlistId = playlistId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
     public UsuarioModel getUsuario() {
@@ -52,12 +62,12 @@ public class PlaylistModel implements Serializable {
         this.usuario = usuario;
     }
 
-    public LocalDateTime getData_criacao() {
-        return data_criacao;
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
     }
 
-    public void setData_criacao(LocalDateTime data_criacao) {
-        this.data_criacao = data_criacao;
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
     public String getNome() {
@@ -66,6 +76,16 @@ public class PlaylistModel implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        PlaylistModel other = (PlaylistModel) obj;
+        return playlistId != null && playlistId.equals(other.playlistId);
     }
 
 }
