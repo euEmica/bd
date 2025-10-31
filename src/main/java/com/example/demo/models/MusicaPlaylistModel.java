@@ -16,7 +16,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "`MUSICAPLAYLIST`")
+@Table(name = "MUSICAPLAYLIST")
 public class MusicaPlaylistModel implements Serializable {
     private static final long serialVersionUID = 1L;
 

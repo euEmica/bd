@@ -19,7 +19,7 @@ import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "`PLAYLIST`")
+@Table(name = "PLAYLIST")
 public class PlaylistModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
