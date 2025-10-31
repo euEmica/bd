@@ -1,6 +1,8 @@
 package com.example.demo.models;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
@@ -9,11 +11,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "`ARTISTA`")
+@Table(name = "ARTISTA")
 public class ArtistaModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,11 +23,12 @@ public class ArtistaModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @OneToOne(mappedBy = "artista", cascade = CascadeType.ALL)
-    private MusicaModel musica;
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL)
+    private Set<MusicaModel> musicas = new HashSet<>();
 
     @Column(nullable = false, unique = true)
     private String nome;
+
     private String nacionalidade;
 
     public UUID getId() {
@@ -52,12 +55,12 @@ public class ArtistaModel implements Serializable {
         this.nacionalidade = nacionalidade;
     }
 
-    public MusicaModel getMusica() {
-        return musica;
+    public Set<MusicaModel> getMusicas() {
+        return musicas;
     }
 
-    public void setMusica(MusicaModel musica) {
-        this.musica = musica;
+    public void setMusicas(Set<MusicaModel> musicas) {
+        this.musicas = musicas;
     }
 
 }
