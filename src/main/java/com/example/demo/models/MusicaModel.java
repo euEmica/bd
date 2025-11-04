@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,15 +24,13 @@ public class MusicaModel implements Serializable {
     @Column(nullable = false, unique = true)
     private String titulo;
 
-    @Column(nullable = false, name="duracao_minutos")
-    private Integer duracaoMinutos;
+    @Column(nullable = false, name="duracao_segundos", columnDefinition = "int4 CHECK ((duracao_segundos > 0))")
+    private Integer duracaoSegundos;
 
-    @Id
-    private Long artistaId;
-
-    @OneToOne()
-    @JoinColumn(name = "artista_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="artista_id", nullable=false)
     private ArtistaModel artista;
+
 
     public Long getId() {
         return id;
@@ -39,14 +38,6 @@ public class MusicaModel implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ArtistaModel getArtista() {
-        return artista;
-    }
-
-    public void setArtista(ArtistaModel artista) {
-        this.artista = artista;
     }
 
     public String getTitulo() {
@@ -57,32 +48,29 @@ public class MusicaModel implements Serializable {
         this.titulo = titulo;
     }
 
-    public Integer getDuracaoMinutos() {
-        return duracaoMinutos;
+    public Integer getDuracaoSegundos() {
+        return duracaoSegundos;
     }
 
-    public void setDuracaoMinutos(Integer duracao) {
-        this.duracaoMinutos = duracao;
+    public void setDuracaoSegundos(Integer duracao) {
+        this.duracaoSegundos = duracao;
     }
 
-    public Long getArtistaId() {
-        return artistaId;
+    public ArtistaModel getArtista() {
+        return artista;
     }
 
-    public void setArtistaId(Long artistaId) {
-        this.artistaId = artistaId;
+    public void setArtista(ArtistaModel artista) {
+        this.artista = artista;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        else if (this.getClass() != obj.getClass())
-            return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-        MusicaModel other = (MusicaModel) obj;
+        MusicaModel that = (MusicaModel) o;
 
-        return this.id.equals(other.getId());
+        return id != null ? id.equals(that.id) : that.id == null;
     }
-
 }

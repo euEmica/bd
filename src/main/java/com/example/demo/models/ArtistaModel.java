@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,15 +20,17 @@ public class ArtistaModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "artista_id_seq")
+    @SequenceGenerator(name = "artista_id_seq",  sequenceName = "artista_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(nullable = false, unique = true)
     private String nome;
 
+    @Column(nullable = false)
     private String nacionalidade;
 
-    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.REMOVE)
     private Set<MusicaModel> musicas = new HashSet<>();
 
     public Long getId() {
@@ -61,5 +64,4 @@ public class ArtistaModel implements Serializable {
     public void setMusicas(Set<MusicaModel> musicas) {
         this.musicas = musicas;
     }
-
 }

@@ -28,14 +28,6 @@ public class UsuarioModel implements Serializable {
     private String userName;
     private String email;
 
-
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    // esse lazy e eager pode modificar como as consultas são feitas(aqui foca na
-    // performace(LAZY))
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    private Set<PlaylistModel> books = new HashSet<>();
-
     public Long getId() {
         return id;
     }
@@ -58,14 +50,6 @@ public class UsuarioModel implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Set<PlaylistModel> getBooks() {
-        return books;
-    }
-
-    public void setBooks(Set<PlaylistModel> books) {
-        this.books = books;
     }
 
 }

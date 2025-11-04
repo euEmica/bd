@@ -27,10 +27,6 @@ public class PlaylistModel implements Serializable {
     @Column(name="usuario_id", nullable = false)
     private Long usuarioId;
 
-    @ManyToOne
-    @PrimaryKeyJoinColumn(name = "usuario_id", referencedColumnName = "id")
-    private UsuarioModel usuario;
-
     @CreationTimestamp
     @Column(name="data_criacao")
     private LocalDateTime dataCriacao;
@@ -52,14 +48,6 @@ public class PlaylistModel implements Serializable {
 
     public Long getUsuarioId() {
         return usuarioId;
-    }
-
-    public UsuarioModel getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(UsuarioModel usuario) {
-        this.usuario = usuario;
     }
 
     public LocalDateTime getDataCriacao() {
