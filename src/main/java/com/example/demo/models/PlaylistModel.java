@@ -2,17 +2,23 @@ package com.example.demo.models;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.example.demo.models.Ids.PlaylistID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,13 +28,14 @@ public class PlaylistModel implements Serializable {
 
     public PlaylistModel() {
         this.id = new PlaylistID();
+        this.musicas = new ArrayList<>();
     }
 
     @EmbeddedId
     private PlaylistID id;
 
     @CreationTimestamp
-    @Column(name="data_criacao")
+    @Column(name = "data_criacao")
     private LocalDateTime dataCriacao;
 
     @Column(nullable = false, unique = true)
@@ -36,9 +43,11 @@ public class PlaylistModel implements Serializable {
 
     @ManyToOne
     @MapsId("usuarioId")
-    @JoinColumn(name="usuario_id", nullable=false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private UsuarioModel usuario;
 
+    @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MusicaPlaylistModel> musicas;
 
     public void setId(PlaylistID id) {
         this.id = id;
@@ -72,14 +81,26 @@ public class PlaylistModel implements Serializable {
         this.usuario = usuario;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        PlaylistModel other = (PlaylistModel) obj;
-        return id != null && id.equals(other.id);
+    public Set<MusicaPlaylistModel> getMusicas() {
+        return Set.copyOf(musicas);
+    }
+
+    public void setMusicas(Set<MusicaPlaylistModel> musicas) {
+        this.musicas = new ArrayList<>(musicas);
+    }
+
+    public void addMusica(MusicaModel musicaPlaylist) {
+        MusicaPlaylistModel musicaPlaylistModel = new MusicaPlaylistModel();
+        musicaPlaylistModel.setMusica(musicaPlaylist);
+        musicaPlaylistModel.setPlaylist(this);
+
+        musicaPlaylistModel.setOrdem(this.musicas.size() + 1);
+
+        this.musicas.add(musicaPlaylistModel);
+    }
+
+    public void removeMusica(MusicaModel musicaPlaylist) {
+        this.musicas.removeIf(mp -> mp.getMusica().equals(musicaPlaylist) && mp.getPlaylist().equals(this));
     }
 
 }

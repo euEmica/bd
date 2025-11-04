@@ -10,7 +10,6 @@ import com.example.demo.models.ArtistaModel;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ArtistaRepositoryTests {
@@ -19,7 +18,8 @@ class ArtistaRepositoryTests {
     private ArtistaRepository artistaRepository;
 
     @Test
-    // @Rollback(false) // remova o comentário para manter as alterações após o teste
+    // @Rollback(false) // remova o comentário para manter as alterações após o
+    // teste
     void testSaveArtista() {
         ArtistaModel artista = new ArtistaModel();
         artista.setNome("Chico Science");

@@ -42,7 +42,8 @@ public class MusicaRepositoryTests {
     }
 
     @Test
-    // @Rollback(false) // remova o comentário para manter as alterações após o teste
+    // @Rollback(false) // remova o comentário para manter as alterações após o
+    // teste
     void testSaveMusica() {
 
         MusicaModel musica = criaMusicaModel();
@@ -90,7 +91,8 @@ public class MusicaRepositoryTests {
     }
 
     @Test
-    // @Rollback(false) // remova o comentário para manter as alterações após o teste
+    // @Rollback(false) // remova o comentário para manter as alterações após o
+    // teste
     void testDeleteMusica() {
 
         MusicaModel musica = criaMusicaModel();

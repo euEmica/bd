@@ -2,71 +2,47 @@ package com.example.demo.models;
 
 import java.io.Serializable;
 
-import jakarta.persistence.AssociationOverride;
-import jakarta.persistence.AssociationOverrides;
+import com.example.demo.models.Ids.MusicaPlaylistID;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "MUSICA_PLAYLIST")
-@AssociationOverrides({
-		@AssociationOverride(name = "pk.musica",
-			joinColumns = @JoinColumn(name = "musica_id")),
-		@AssociationOverride(name = "pk.artista",
-			joinColumns = @JoinColumn(name = "artista_id")),
-        @AssociationOverride(name = "pk.usuario",
-            joinColumns = @JoinColumn(name = "usuario_id")) })
 public class MusicaPlaylistModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    public MusicaPlaylistModel() {
+        this.id = new MusicaPlaylistID();
+    }
+
+    @EmbeddedId
+    private MusicaPlaylistID id;
 
     // Attributes
-
-    @Id
-    @Column(name = "musica_id", nullable = false)
-    private Long musicaId;
-
-    @Id
-    @Column(name = "artista_id", nullable = false)
-    private Long artistaId;
-
-    @Id
-    @Column(name = "usuario_id", nullable = false)
-    private Long usuarioId;
 
     @Column(name = "ordem_na_playlist", nullable = false)
     private Integer ordem;
 
+    @MapsId("musicaId")
+    @ManyToOne
+    private MusicaModel musica;
+
+    @ManyToOne
+    @MapsId("playlistId")
+    @JoinColumns({
+        @JoinColumn(name = "playlist_id", referencedColumnName = "playlist_id", nullable = false),
+        @JoinColumn(name = "usuario_id", referencedColumnName = "usuario_id", nullable = false)
+    })
+    private PlaylistModel playlist;
 
     // Getters and Setters
-
-    public Long getMusicaId() {
-        return musicaId;
-    }
-
-    public void setMusicaId(Long musicaId) {
-        this.musicaId = musicaId;
-    }
-
-    public Long getArtistaId() {
-        return artistaId;
-    }
-
-    public void setArtistaId(Long artistaId) {
-        this.artistaId = artistaId;
-    }
-
-    public Long getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
-    }
-
     public Integer getOrdem() {
         return ordem;
     }
@@ -75,25 +51,31 @@ public class MusicaPlaylistModel implements Serializable {
         this.ordem = ordem;
     }
 
-
-    // Override hashCode and equals for composite key
-
-    @Override
-    public int hashCode() {
-        return Integer.parseInt(String.valueOf(Long.hashCode(musicaId)) + String.valueOf(Long.hashCode(artistaId))
-                + String.valueOf(Long.hashCode(usuarioId)));
+    public MusicaPlaylistID getId() {
+        return id;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-
-        MusicaPlaylistModel other = (MusicaPlaylistModel) obj;
-        return this.musicaId.equals(other.getMusicaId()) && this.artistaId.equals(other.getArtistaId())
-                && this.usuarioId.equals(other.getUsuarioId());
+    public void setId(MusicaPlaylistID id) {
+        this.id = id;
     }
 
+    public MusicaModel getMusica() {
+        return musica;
+    }
+
+    public void setMusica(MusicaModel musica) {
+        this.musica = musica;
+
+        this.id.setMusicaId(musica.getId());
+    }
+
+    public PlaylistModel getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(PlaylistModel playlist) {
+        this.playlist = playlist;
+
+        this.id.setPlaylistId(playlist.getId());
+    }
 }

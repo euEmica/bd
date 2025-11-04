@@ -1,6 +1,7 @@
 package com.example.demo.models.Ids;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
@@ -16,7 +17,7 @@ public class PlaylistID implements Serializable {
     @Column(name="playlist_id")
     private Long playlistId;
 
-    @Column(name = "usuario_id", nullable = false)
+    @Column(name = "usuario_id", nullable = false, insertable=false, updatable=false)
     private Long usuarioId;
 
     // Getters and Setters
@@ -49,9 +50,7 @@ public class PlaylistID implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = playlistId.hashCode();
-        result = 31 * result + usuarioId.hashCode();
-        return result;
+        return Objects.hash(playlistId, usuarioId);
     }
 
 }
