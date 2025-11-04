@@ -5,13 +5,20 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.example.demo.models.Ids.PlaylistID;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,13 +26,12 @@ import jakarta.persistence.Table;
 public class PlaylistModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long playlistId;
+    public PlaylistModel() {
+        this.id = new PlaylistID();
+    }
 
-    @Id
-    @Column(name="usuario_id", nullable = false)
-    private Long usuarioId;
+    @EmbeddedId
+    private PlaylistID id;
 
     @CreationTimestamp
     @Column(name="data_criacao")
@@ -34,20 +40,18 @@ public class PlaylistModel implements Serializable {
     @Column(nullable = false, unique = true)
     private String nome;
 
-    public Long getPlaylistId() {
-        return playlistId;
+    @ManyToOne
+    @MapsId("usuarioId")
+    @JoinColumn(name="usuario_id", nullable=false)
+    private UsuarioModel usuario;
+
+
+    public void setId(PlaylistID id) {
+        this.id = id;
     }
 
-    public void setPlaylistId(Long playlistId) {
-        this.playlistId = playlistId;
-    }
-
-    public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
-    }
-
-    public Long getUsuarioId() {
-        return usuarioId;
+    public PlaylistID getId() {
+        return id;
     }
 
     public LocalDateTime getDataCriacao() {
@@ -66,6 +70,14 @@ public class PlaylistModel implements Serializable {
         this.nome = nome;
     }
 
+    public UsuarioModel getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(UsuarioModel usuario) {
+        this.usuario = usuario;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -73,7 +85,7 @@ public class PlaylistModel implements Serializable {
         if (obj == null || getClass() != obj.getClass())
             return false;
         PlaylistModel other = (PlaylistModel) obj;
-        return playlistId != null && playlistId.equals(other.playlistId);
+        return id != null && id.equals(other.id);
     }
 
 }

@@ -25,8 +25,11 @@ public class UsuarioModel implements Serializable {
     private Long id;
 
     @Column(nullable = false, unique = true, name="username")
-    private String userName;
+    private String username;
     private String email;
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    private Set<PlaylistModel> playlists = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -36,12 +39,12 @@ public class UsuarioModel implements Serializable {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getEmail() {
@@ -50,6 +53,14 @@ public class UsuarioModel implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<PlaylistModel> getPlaylists() {
+        return playlists;
+    }
+
+    public void setPlaylists(Set<PlaylistModel> playlists) {
+        this.playlists = playlists;
     }
 
 }
