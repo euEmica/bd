@@ -22,7 +22,7 @@ class ArtistaRepositoryTests {
     // teste
     void testSaveArtista() {
         ArtistaModel artista = new ArtistaModel();
-        artista.setNome("Chico Science");
+        artista.setNome("Agnes Nunes");
         artista.setNacionalidade("Brasileira");
         artistaRepository.save(artista);
 
@@ -30,7 +30,7 @@ class ArtistaRepositoryTests {
 
         ArtistaModel foundArtista = artistaRepository.findById(artista.getId()).orElse(null);
         assertThat(foundArtista).isNotNull();
-        assertThat(foundArtista.getNome()).isEqualTo("Chico Science");
+        assertThat(foundArtista.getNome()).isEqualTo("Agnes Nunes");
         assertThat(foundArtista.getNacionalidade()).isEqualTo("Brasileira");
     }
 
