@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Rollback;
 
 import com.example.demo.dtos.playlists.PlaylistDurationDTO;
 import com.example.demo.models.*;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Rollback(false)
 public class Consulta2_2OtimizacaoEDetalheTests {
     @Autowired
     private MusicaRepository musicaRepository;

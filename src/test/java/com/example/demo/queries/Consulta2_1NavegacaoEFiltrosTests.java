@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.util.Pair;
+import org.springframework.test.annotation.Rollback;
 
 import com.example.demo.models.*;
 import com.example.demo.repositories.*;
@@ -16,6 +17,7 @@ import java.util.Set;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Rollback(false)
 public class Consulta2_1NavegacaoEFiltrosTests {
     // Consultas Focadas em Relacionamentos (Navegação e Filtro)
 

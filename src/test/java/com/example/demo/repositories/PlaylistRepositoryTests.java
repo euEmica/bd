@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // para garantir que vai usar o postgres
+@Rollback(false)
 public class PlaylistRepositoryTests {
 
     @Autowired
