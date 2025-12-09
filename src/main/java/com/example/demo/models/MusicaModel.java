@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -29,10 +31,12 @@ public class MusicaModel implements Serializable {
     @Column(nullable = false, name="duracao_segundos", columnDefinition = "int4 CHECK ((duracao_segundos > 0))")
     private Integer duracaoSegundos;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="artista_id", nullable=false)
     private ArtistaModel artista;
 
+    @OneToMany(mappedBy = "musica")
+    private Set<MusicaPlaylistModel> playlists;
 
     public Long getId() {
         return id;
@@ -64,6 +68,10 @@ public class MusicaModel implements Serializable {
 
     public void setArtista(ArtistaModel artista) {
         this.artista = artista;
+    }
+
+    public Set<MusicaPlaylistModel> getPlaylists() {
+        return playlists;
     }
 
     @Override

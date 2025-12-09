@@ -15,7 +15,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
@@ -87,6 +86,12 @@ public class PlaylistModel implements Serializable {
 
     public void setMusicas(Set<MusicaPlaylistModel> musicas) {
         this.musicas = new ArrayList<>(musicas);
+    }
+
+    public void addMusicas(Set<MusicaModel> musicas) {
+        for (MusicaModel musica : musicas) {
+            addMusica(musica);
+        }
     }
 
     public void addMusica(MusicaModel musicaPlaylist) {
