@@ -99,13 +99,30 @@ public class PlaylistModel implements Serializable {
         musicaPlaylistModel.setMusica(musicaPlaylist);
         musicaPlaylistModel.setPlaylist(this);
 
-        musicaPlaylistModel.setOrdem(this.musicas.size() + 1);
+        Integer maxOrdem = this.musicas.stream()
+                .map(MusicaPlaylistModel::getOrdem)
+                .max(Integer::compareTo)
+                .orElse(0);
+        musicaPlaylistModel.setOrdem(maxOrdem + 1);
+        // adjustMusicasOrder();
 
         this.musicas.add(musicaPlaylistModel);
     }
 
     public void removeMusica(MusicaModel musicaPlaylist) {
         this.musicas.removeIf(mp -> mp.getMusica().equals(musicaPlaylist) && mp.getPlaylist().equals(this));
+        // adjustMusicasOrder();
+    }
+
+    public void adjustMusicasOrder() {
+        List<MusicaPlaylistModel> musicas = this.musicas;
+        musicas.sort((mp1, mp2) -> mp1.getOrdem().compareTo(mp2.getOrdem()));
+
+        Integer ordem = 1;
+        for (MusicaPlaylistModel mp : musicas) {
+            mp.setOrdem(ordem);
+            ordem++;
+        }
     }
 
     @Override
@@ -115,6 +132,7 @@ public class PlaylistModel implements Serializable {
                 ", dataCriacao=" + dataCriacao +
                 ", nome='" + nome + '\'' +
                 ", usuario=" + usuario.getUsername() +
+                ", musicas=" + musicas.size() +
                 '}';
     }
 

@@ -113,4 +113,6 @@ public interface PlaylistRepository extends RepositoryInterface<PlaylistModel, P
         + " WHERE p.nome = :playlistNome"
         + " ORDER BY pm.ordem ASC")
     public List<Pair<String, Long>> getPlaylistsMusicasAndOrder(String playlistNome);
+
+    public Optional<PlaylistModel> findByIdPlaylistIdAndIdUsuarioId(Long playlistId, Long usuarioId);
 }

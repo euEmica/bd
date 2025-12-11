@@ -92,4 +92,38 @@ public interface MusicaRepository extends RepositoryInterface<MusicaModel, Long>
         + " WHERE m.duracaoSegundos < "
         + " (SELECT AVG(m2.duracaoSegundos) FROM MusicaModel m2 WHERE m2.artista.id = m.artista.id)")
     public Set<MusicaModel> findMusicasMaisCurtasQueAMedia();
+
+
+    /*
+        select
+            mm1_0.id,
+            mm1_0.artista_id,
+            mm1_0.duracao_segundos,
+            mm1_0.titulo
+        from
+            MUSICA mm1_0
+        join
+            ARTISTA a1_0
+                on a1_0.id=mm1_0.artista_id
+        where
+            a1_0.nome=?
+            and mm1_0.duracao_segundos>(
+                select
+                    max(mm2_0.duracao_segundos)
+                from
+                    MUSICA mm2_0
+                join
+                    ARTISTA a2_0
+                        on a2_0.id=mm2_0.artista_id
+                where
+                    a2_0.nome=?
+            )
+     */
+
+    @Query("SELECT m FROM MusicaModel m "
+        + " WHERE m.artista.nome = :artista1 "
+        + " AND m.duracaoSegundos > "
+        + " (SELECT MAX(m2.duracaoSegundos) FROM MusicaModel m2 "
+        + "   WHERE m2.artista.nome = :artista2 )")
+    public Set<MusicaModel> findMusicasFromArtistaThatIsBiggerThanTheBiggestMusicaFromOtherArtista(String artista1, String artista2);
 }

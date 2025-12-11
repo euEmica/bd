@@ -7,6 +7,7 @@ import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,7 +31,7 @@ public class ArtistaModel implements Serializable {
     @Column(nullable = false)
     private String nacionalidade;
 
-    @OneToMany(mappedBy = "artista", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "artista", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Set<MusicaModel> musicas = new HashSet<>();
 
     public Long getId() {
