@@ -53,4 +53,11 @@ public class PlaylistID implements Serializable {
         return Objects.hash(playlistId, usuarioId);
     }
 
+    @Override
+    public String toString() {
+        return "PlaylistID{" +
+                "playlistId=" + playlistId +
+                ", usuarioId=" + usuarioId +
+                '}';
+    }
 }

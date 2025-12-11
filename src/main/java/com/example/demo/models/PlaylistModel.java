@@ -108,4 +108,14 @@ public class PlaylistModel implements Serializable {
         this.musicas.removeIf(mp -> mp.getMusica().equals(musicaPlaylist) && mp.getPlaylist().equals(this));
     }
 
+    @Override
+    public String toString() {
+        return "PlaylistModel{" +
+                "id=" + id +
+                ", dataCriacao=" + dataCriacao +
+                ", nome='" + nome + '\'' +
+                ", usuario=" + usuario.getUsername() +
+                '}';
+    }
+
 }

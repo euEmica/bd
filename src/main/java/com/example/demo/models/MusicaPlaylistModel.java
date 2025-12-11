@@ -78,4 +78,14 @@ public class MusicaPlaylistModel implements Serializable {
 
         this.id.setPlaylistId(playlist.getId());
     }
+
+    @Override
+    public String toString() {
+        return "MusicaPlaylistModel{" +
+                "id=" + id +
+                ", ordem=" + ordem +
+                ", musica=" + musica +
+                ", playlist=" + playlist +
+                '}';
+    }
 }

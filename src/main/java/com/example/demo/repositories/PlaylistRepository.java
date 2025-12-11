@@ -29,9 +29,6 @@ public interface PlaylistRepository extends RepositoryInterface<PlaylistModel, P
     where
         u1_0.username=?
     */
-   @Query("SELECT p FROM PlaylistModel p "
-           + "INNER JOIN p.usuario u "
-           + "WHERE u.username = :username ")
     public Set<PlaylistModel> findByUsuarioUsername(String username);
 
     /*
@@ -47,11 +44,14 @@ public interface PlaylistRepository extends RepositoryInterface<PlaylistModel, P
         group by
             pm1_0.playlist_id,
             pm1_0.usuario_id
+        order by
+            pm1_0.nome desc
     */
     @Query("SELECT p.nome, count(pm) FROM PlaylistModel p "
             + "INNER JOIN p.musicas pm "
-            + "GROUP BY p.id ")
-    public Set<Pair<String, Long>> getPlaylistsNamesAndSizes();
+            + "GROUP BY p.id "
+            + "ORDER BY p.nome DESC")
+    public List<Pair<String, Long>> getPlaylistsNamesAndSizes();
 
     public Optional<PlaylistModel> findByNome(String nome);
 

@@ -83,4 +83,14 @@ public class MusicaModel implements Serializable {
 
         return id != null ? id.equals(that.id) : that.id == null;
     }
+
+    @Override
+    public String toString() {
+        return "MusicaModel{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", duracaoSegundos=" + duracaoSegundos +
+                ", artista=" + (artista != null ? artista.getNome() : "null") +
+                '}';
+    }
 }

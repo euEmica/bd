@@ -12,7 +12,7 @@ import com.example.demo.models.MusicaModel;
 public interface MusicaRepository extends RepositoryInterface<MusicaModel, Long> {
     /*
         select
-            mm1_0.id,
+            distinct mm1_0.id,
             mm1_0.artista_id,
             mm1_0.duracao_segundos,
             mm1_0.titulo
@@ -34,7 +34,7 @@ public interface MusicaRepository extends RepositoryInterface<MusicaModel, Long>
                 on a1_0.id=mm1_0.artista_id
                 and a1_0.nome=?
     */
-    @Query("SELECT m FROM MusicaModel m "
+    @Query("SELECT DISTINCT m FROM MusicaModel m "
             + "INNER JOIN m.playlists mp "
             + "INNER JOIN mp.playlist p "
             + "INNER JOIN p.usuario u on u.username = :usuario "

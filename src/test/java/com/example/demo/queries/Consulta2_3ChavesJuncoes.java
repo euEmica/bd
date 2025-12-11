@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Rollback(false)
+// @Rollback(false)
 public class Consulta2_3ChavesJuncoes {
 
     @Autowired

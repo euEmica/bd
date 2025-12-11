@@ -19,21 +19,22 @@ public interface ArtistaRepository extends RepositoryInterface <ArtistaModel, Lo
             am1_0.nome
         from
             ARTISTA am1_0
-        join
-            MUSICA m1_0
-                on am1_0.id=m1_0.artista_id
         where
-            0=(
-                select
-                    count(*)
-                from
-                    MUSICA_PLAYLIST p1_0
-                where
-                    m1_0.id=p1_0.musica_id
-            )
+            not exists(select
+                m1_0.id
+            from
+                MUSICA m1_0
+            join
+                MUSICA_PLAYLIST p1_0
+                    on m1_0.id=p1_0.musica_id
+            where
+                am1_0.id=m1_0.artista_id)
     */
+
     @Query("SELECT a FROM ArtistaModel a "
-           + "INNER JOIN a.musicas m "
-           + "WHERE 0 = (SELECT count(*) FROM m.playlists)")
+            + "WHERE NOT EXISTS ("
+            + "   SELECT m FROM a.musicas m "
+            + "   JOIN m.playlists mp"
+            + ")")
     public Set<ArtistaModel> artistasSemMusicasEmQualquerPlaylist();
 }

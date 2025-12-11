@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // para garantir que vai usar o postgres
-@Rollback(false)
+// @Rollback(false)
 public class PlaylistRepositoryTests {
 
     @Autowired
@@ -59,17 +59,17 @@ public class PlaylistRepositoryTests {
         PlaylistModel playlist = playlistRepository.save(criaPlaylistModel());
 
         MusicaModel bohemianRhapsody = musicaRepository.findById(1L).orElseThrow();
-        MusicaModel stairwayToHeaven = musicaRepository.findById(2L).orElseThrow();
+        MusicaModel backInBlack = musicaRepository.findById(3L).orElseThrow();
 
         playlist.addMusica(bohemianRhapsody);
-        playlist.addMusica(stairwayToHeaven);
+        playlist.addMusica(backInBlack);
 
         playlist = playlistRepository.save(playlist);
 
         PlaylistModel foundPlaylist = playlistRepository.findById(playlist.getId()).orElseThrow();
         assertThat(foundPlaylist.getMusicas()).hasSize(2);
         assertThat(foundPlaylist.getMusicas()).extracting("musica.id")
-                .containsExactlyInAnyOrder(bohemianRhapsody.getId(), stairwayToHeaven.getId());
+                .containsExactlyInAnyOrder(bohemianRhapsody.getId(), backInBlack.getId());
     }
 
     @Test
@@ -77,10 +77,10 @@ public class PlaylistRepositoryTests {
         PlaylistModel playlist = playlistRepository.save(criaPlaylistModel());
 
         MusicaModel bohemianRhapsody = musicaRepository.findById(1L).orElseThrow();
-        MusicaModel stairwayToHeaven = musicaRepository.findById(2L).orElseThrow();
+        MusicaModel backInBlack = musicaRepository.findById(3L).orElseThrow();
 
         playlist.addMusica(bohemianRhapsody);
-        playlist.addMusica(stairwayToHeaven);
+        playlist.addMusica(backInBlack);
 
         playlist = playlistRepository.save(playlist);
 
@@ -90,7 +90,7 @@ public class PlaylistRepositoryTests {
 
         PlaylistModel foundPlaylist = playlistRepository.findById(playlist.getId()).orElseThrow();
         assertThat(foundPlaylist.getMusicas()).hasSize(1);
-        assertThat(foundPlaylist.getMusicas()).extracting("musica.id").containsExactly(stairwayToHeaven.getId());
+        assertThat(foundPlaylist.getMusicas()).extracting("musica.id").containsExactly(backInBlack.getId());
     }
 
 }

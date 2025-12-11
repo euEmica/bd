@@ -64,4 +64,13 @@ public class ArtistaModel implements Serializable {
     public void setMusicas(Set<MusicaModel> musicas) {
         this.musicas = musicas;
     }
+
+    @Override
+    public String toString() {
+        return "ArtistaModel{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", nacionalidade='" + nacionalidade + '\'' +
+                '}';
+    }
 }

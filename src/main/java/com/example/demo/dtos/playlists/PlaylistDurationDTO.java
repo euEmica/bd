@@ -22,4 +22,13 @@ public class PlaylistDurationDTO {
     public Long getDuracaoTotal() {
         return duracaoTotal;
     }
+
+    @Override
+    public String toString() {
+        return "PlaylistDurationDTO{" +
+                "playlistNome='" + playlistNome + '\'' +
+                ", usuarioNome='" + usuarioNome + '\'' +
+                ", duracaoTotal=" + duracaoTotal +
+                '}';
+    }
 }
